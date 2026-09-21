@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Chat minimaliste et ultra-rapide en temps réel avec Node.js, Express, Twig et Socket.IO." />
+  <title>{{ title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="chat-app-wrapper">
+    <!-- En-tête de l'application -->
+    <header class="chat-header">
+      <div class="chat-header-brand">
+        <div class="brand-avatar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <h1 class="brand-title">{{ appName }}</h1>
+          <div class="connection-status">
+            <span class="status-indicator"></span>
+            <span class="status-text" id="connection-status">Connecté</span>
+            <span class="status-divider">•</span>
+            <span class="users-badge">
+              <span id="users-count">1</span> en ligne
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-header-user">
+        <div class="user-chip" id="user-chip" title="Cliquez pour changer de pseudo">
+          <span class="user-chip-label">Pseudo :</span>
+          <strong class="user-chip-name" id="current-username">...</strong>
+        </div>
+      </div>
+    </header>
+
+    <!-- Zone d'affichage des messages -->
+    <main class="chat-main" id="messages-container">
+      <div class="chat-welcome" id="chat-welcome">
+        <div class="welcome-icon">💬</div>
+        <h2>Bienvenue sur {{ appName }}</h2>
+        <p>Les messages sont instantanés et éphémères (ils disparaissent au rechargement).</p>
+      </div>
+
+      <div class="messages-list" id="messages-list" role="log" aria-live="polite">
+        <!-- Les messages et notifications seront injectés ici en JavaScript -->
+      </div>
+    </main>
+
+    <!-- Pied de page avec formulaire de saisie -->
+    <footer class="chat-footer">
+      <form class="chat-form" id="chat-form" autocomplete="off">
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="message-input"
+            name="message"
+            placeholder="Écrivez votre message ici..."
+            maxlength="1000"
+            required
+            autocomplete="off"
+            autofocus
+          />
+        </div>
+        <button type="submit" id="send-button" class="send-btn" aria-label="Envoyer le message">
+          <span>Envoyer</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+    </footer>
+  </div>
+
+  <!-- Socket.IO client et script applicatif -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/chat.js"></script>
+</body>
+</html>
